@@ -68,6 +68,8 @@ rundeck:
   environment:
     - SERVER_URL=http://ci-tools/rundeck/
     - RDECK_JVM=-Dserver.web.context=/rundeck
+  volumes: 
+    - ./keys:/keys
   labels:
     - traefik.backend=rundeck
     - traefik.port=4440
