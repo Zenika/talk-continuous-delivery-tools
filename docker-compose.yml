@@ -30,7 +30,7 @@ gogs:
 
 nexus-data:
   container_name: nexus-data
-  image: alpine
+  image: sonatype/nexus
   command: echo 'data-container for nexus'
 
 nexus: 
@@ -47,10 +47,19 @@ nexus:
     - traefik.frontend.value=/nexus
     - traefik.frontend.passHostHeader=true
 
+jenkins-data: 
+  container_name: jenkins-data
+  image: alpine
+  command: echo 'data-container for jenkins'
+  volumes: 
+    - /var/jenkins_home
+
 jenkins: 
   container_name: jenkins
   build: ./jenkins
   command: --prefix=/jenkins
+  volumes_from: 
+    - jenkins-data
   ports:
     - 8081:8080
   labels:
@@ -64,12 +73,10 @@ jenkins:
 
 rundeck:
   container_name: rundeck
-  image: jordan/rundeck
+  image: mpousse/rundeck:customization
   environment:
-    - SERVER_URL=http://ci-tools.has-unlimited.space/rundeck/
+    - SERVER_URL=http://ci-tools/rundeck/
     - RDECK_JVM=-Dserver.web.context=/rundeck
-  volumes: 
-    - ./keys:/keys
   labels:
     - traefik.backend=rundeck
     - traefik.port=4440

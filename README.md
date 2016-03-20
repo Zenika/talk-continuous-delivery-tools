@@ -61,5 +61,7 @@ Account: admin / admin123 - deployment / deployment123
  + New maven job 
  + git : http://ci-tools.has-unlimited.space/gogs/mpousse/my-app.git
  + poll scm : * * * * *
- + Goals and options: clean package -DskipTests
+ + Goals and options: clean install
+ + Enable release
+ + Post action: publish artifact
 

@@ -2,4 +2,5 @@ git
 maven-plugin
 build-pipeline-plugin
 rundeck
+maven-metadata-plugin
 
