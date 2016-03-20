@@ -1,7 +1,9 @@
 - hosts : tc
   tasks: 
+  - name : Install OpenJDK8
+    apt: name=openjdk-8-jre-headless update_cache=true
   - name : Install tomcat
-    apt: name=tomcat8 update_cache=true
+    apt: name=tomcat8
 
 - hosts: testserv
   taks:
