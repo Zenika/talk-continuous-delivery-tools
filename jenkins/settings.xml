@@ -2,6 +2,11 @@
 <settings>
   <servers>
     <server>
+      <id>gogs</id>  
+      <username>jenkins</username>  
+      <password>password</password>  
+    </server>   
+    <server>
       <id>nexus</id>
       <username>deployment</username>
       <password>deployment123</password>
