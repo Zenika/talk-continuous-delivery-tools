@@ -1,0 +1,6 @@
+<project>
+        <node name="test" type="Node" description="test machine" hostname="test" username="ubuntu" tags="test,tomcat"/>
+        <node name="tc-prod-1" type="Node" description="prod machine 1" hostname="tc-prod-1" username="ubuntu" tags="prod,tomcat"/>
+        <node name="tc-prod-2" type="Node" description="prod machine 2" hostname="tc-prod-2" username="ubuntu" tags="prod,tomcat"/>
+</project>
+
