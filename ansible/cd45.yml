@@ -1,0 +1,36 @@
+- hosts : tc
+  tasks: 
+  - name : Install tomcat
+    apt: name=tomcat8 update_cache=true
+
+- hosts : pg
+  sudo: yes
+  tasks:
+  - name: Update du cache apt
+    apt: update_cache=yes
+  - name: Install PostGreSQL et outillage
+    apt: name={{item}}
+    with_items:
+        - postgresql-9.4
+        - libpq-dev
+        - python-psycopg2
+
+- hosts : pg
+  sudo: yes
+  sudo_user: postgres
+  vars:
+    dbname: chat
+    dbuser: user_rw
+    dbpassword: mysecretpassword
+  tasks:
+  - name: Creation BDD
+    postgresql_db: name={{dbname}}
+
+  - name: Creation user
+    postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpassword}} priv=ALL
+- hosts : rp
+  tasks: 
+  - name : Install HAProxy
+    apt: name=haproxy update_cache=true
+  - name : HAProxy config
+    copy: src=files/haproxy.cfg dest=/etc/haproxy/haproxy.cfg owner=root group=root mode=0644

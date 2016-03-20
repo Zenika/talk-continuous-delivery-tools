@@ -1,0 +1,24 @@
+Sur RP : 
+sed -i s/"server app1"/"\#server app1"/ /etc/haproxy/haproxy.cfg
+service haproxy reload
+
+Sur TC1 : 
+service tomcat8 stop
+rm -rf /var/lib/tomcat8/webapps/*
+wget -O /var/lib/tomcat8/webapps/server.war http://URL_DE_LA_RELEASE
+service tomcat8 start
+
+Sur RP :
+sed -i s/"\#server app1"/"server app1"/ /etc/haproxy/haproxy.cfg
+sed -i s/"server app2"/"\#server app2"/ /etc/haproxy/haproxy.cfg
+service haproxy reload
+
+Sur TC2 :
+service tomcat8 stop
+rm -rf /var/lib/tomcat8/webapps/*
+wget -O /var/lib/tomcat8/webapps/server.war http://URL_DE_LA_RELEASE
+service tomcat8 start
+
+Sur RP :
+sed -i s/"\#server app2"/"server app2"/ /etc/haproxy/haproxy.cfg
+service haproxy reload

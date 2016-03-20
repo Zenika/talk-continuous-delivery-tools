@@ -1,0 +1,4 @@
+- hosts : tc
+  tasks: 
+  - name : Install tomcat
+    apt: name=tomcat8 update_cache=true

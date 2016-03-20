@@ -1,0 +1,25 @@
+- hosts : pg
+  sudo: yes
+  tasks:
+  - name: Update du cache apt
+    apt: update_cache=yes
+  - name: Install PostGreSQL et outillage
+    apt: name={{item}}
+    with_items:
+        - postgresql-9.4
+        - libpq-dev
+        - python-psycopg2
+
+- hosts : pg
+  sudo: yes
+  sudo_user: postgres
+  vars:
+    dbname: chat
+    dbuser: user_rw
+    dbpassword: mysecretpassword
+  tasks:
+  - name: Creation BDD
+    postgresql_db: name={{dbname}}
+
+  - name: Creation user
+    postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpassword}} priv=ALL
