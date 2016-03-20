@@ -47,19 +47,10 @@ nexus:
     - traefik.frontend.value=/nexus
     - traefik.frontend.passHostHeader=true
 
-jenkins-data: 
-  container_name: jenkins-data
-  image: alpine
-  command: echo 'data-container for jenkins'
-  volumes: 
-    - /var/jenkins_home
-
 jenkins: 
   container_name: jenkins
   build: ./jenkins
   command: --prefix=/jenkins
-  volumes_from: 
-    - jenkins-data
   ports:
     - 8081:8080
   labels:
@@ -85,4 +76,18 @@ rundeck:
     - traefik.frontend.passHostHeader=true
   ports: 
     - 4440:4440
+
+elk:
+  container_name: elk
+  image: willdurand/elk
+  ports: 
+    - 8060:80
+  volumes: 
+    - ./elk/etc/logstash/conf.d:/etc/logstash
+  labels:
+    - traefik.backend=elk
+    - traefik.port=80
+    - traefik.frontend.rule=PathPrefixStrip
+    - traefik.frontend.value=/kibana
+    - traefik.frontend.passHostHeader=true
 
