@@ -2,3 +2,9 @@
   tasks: 
   - name : Install tomcat
     apt: name=tomcat8 update_cache=true
+
+- hosts: testserv
+  taks:
+  - name: Db en local pour le serveur de test
+    lineinfile: dest=/etc/hosts line='127.0.0.1 db'
+

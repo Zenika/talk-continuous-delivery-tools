@@ -3,6 +3,11 @@
   - name : Install tomcat
     apt: name=tomcat8 update_cache=true
 
+- hosts: testserv
+  taks:
+  - name: Db en local pour le serveur de test
+    lineinfile: dest=/etc/hosts line='127.0.0.1	db'
+  
 - hosts : pg
   sudo: yes
   tasks:
@@ -34,3 +39,7 @@
     apt: name=haproxy update_cache=true
   - name : HAProxy config
     copy: src=files/haproxy.cfg dest=/etc/haproxy/haproxy.cfg owner=root group=root mode=0644
+  - name: Redemarre HAProxy
+    service: name=haproxy state=restarted
+
+

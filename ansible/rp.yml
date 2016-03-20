@@ -1,6 +1,8 @@
 - hosts : rp
   tasks: 
-  - name : Install HAProxy
+  - name: Install HAProxy
     apt: name=haproxy update_cache=true
-  - name : HAProxy config
+  - name: HAProxy config
     copy: src=files/haproxy.cfg dest=/etc/haproxy/haproxy.cfg owner=root group=root mode=0644
+  - name: Redemarre HAProxy
+    service: name=haproxy state=restarted
