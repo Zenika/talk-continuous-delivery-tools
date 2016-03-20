@@ -1,0 +1,30 @@
+- hosts : tool
+  tasks: 
+  - name: Update du cache apt
+    apt: update_cache=yes
+
+  - name: Installation prerequis
+    apt: name={{item}}
+    with_items:
+        - apt-transport-https
+        - ca-certificates
+
+  - name: Deploiement certificat Docker
+    apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D
+
+  - name: Deploiement source.list docker
+    copy: src=files/docker.list dest=/etc/apt/sources.list.d/docker.list owner=root group=root mode=0644
+
+  - name: Installation de Docker
+    apt: name=docker-engine update_cache=true
+
+  - name: Installation de Docker Compose
+    copy: src=files/docker-compose dest=/usr/local/bin/docker-compose owner=root group=root mode=0755
+
+  - name: Recuperation du projet Git
+    git: repo=https://github.com/ZenikaOuest/talk-continuous-delivery-tools.git dest=/opt/cd45 
+
+#  - name: Lancement de Compose
+#    command: docker-compose up -d
+#    args: 
+#      chdir: /opt/cd45/
