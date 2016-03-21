@@ -79,7 +79,7 @@ Account: admin / admin123 - deployment / deployment123
    + Default: LATEST
  + Post action: Rundeck
    + Job Identifier
-   + Job options: war_url=${SERVER_ARTIFACT_URL
+   + Job options: war_url=${SERVER_ARTIFACT_URL}
    + Wait for Rundeck job to finish
    + Include Rundeck job output
    + Tail Logging
@@ -87,7 +87,7 @@ Account: admin / admin123 - deployment / deployment123
 
 ### it-test
 
- + Freestyle Jon
+ + Freestyle Job
  + echo "H4sICNN38FYAA21lbWUAjVO7DsQgDNv56gwMXmG4D+RLTqIN57zakywENNhxkq7PWD90ghToDm0ZCtjj/ANX5M3eCq7qWYQLQCtSO5axcazFAHd/M8oWOZ+nasRisfAllty3fZ66dtXghlSWHwpleMejUwQNobBubc1TB1AcaMMyQi0ehaFjIumY6AMQKYqpFI0ULbchNVJWA8QCuwHB07kOiC2Ii0GGhNGVfwSnKNZT1oSReXsYl2q8XujSBOMkxt/3nTHNOv6RmuAXEJs/bs4EAAA=" | base64 -d | gzip -d -c | xargs -0 echo && curl -I http://test:8080 | grep 200
 
 ### release-core
@@ -97,4 +97,20 @@ Account: admin / admin123 - deployment / deployment123
   + Additional Behaviours: Check out to specific local branch: master
   + Goals: release:prepare release:perform --batch-mode
  
+###  deploy-prod
 
+ + This build is parameterized: List maven artifact versions
+   + Name: SERVER
+   + Repository Base URL: http://ci-tools/nexus/content/repositories/public
+   + Group Id: my-startup
+   + Artifact Id: server
+   + Packaging: war
+   + Versions filter: [0-9]+.[0-9]+.[0-9]+
+   + Default: LATEST
+ + Post action: Rundeck
+   + Job Identifier
+   + Job options: war_url=${SERVER_ARTIFACT_URL}
+   + Wait for Rundeck job to finish
+   + Include Rundeck job output
+   + Tail Logging
+   + Should fail the build
