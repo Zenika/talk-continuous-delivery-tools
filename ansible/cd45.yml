@@ -6,7 +6,7 @@
     apt: name=tomcat8
 
 - hosts: testserv
-  taks:
+  tasks:
   - name: Db en local pour le serveur de test
     lineinfile: dest=/etc/hosts line='127.0.0.1	db'
   
