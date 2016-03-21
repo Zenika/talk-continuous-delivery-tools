@@ -21,6 +21,12 @@
         - postgresql-9.4
         - libpq-dev
         - python-psycopg2
+  - name: Postgres doit ecouter sur 0.0.0.0
+    lineinfile: dest=/etc/postgresql/9.4/main/postgresql.conf line="listen_addresses = '*'"
+  - name: Postgres doit autoriser les connexions sur 0.0.0.0
+    lineinfile: dest=/etc/postgresql/9.4/main/pg_hba.conf line="host  all  all 0.0.0.0/0 md5"
+  - name: Redemarre postgresql
+    service: name=postgresql state=restarted
 
 - hosts : pg
   sudo: yes
