@@ -34,7 +34,8 @@
     postgresql_db: name={{dbname}}
 
   - name: Creation user
-    postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpassword}} priv=ALL
+    postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpassword}} role_attr_flags=CREATEDB,SUPERUSER,LOGIN
+
 - hosts : rp
   tasks: 
   - name : Install HAProxy
