@@ -37,6 +37,7 @@ Account: admin / admin123 - deployment / deployment123
  + settings.xml (login / password)
  + pom.xml
 
+```xml
    <distributionManagement>
         <repository>
             <id>nexus</id>
@@ -48,11 +49,9 @@ Account: admin / admin123 - deployment / deployment123
             <url>http://ci-tools/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
+```
 
 ## Configuration de Jenkins
-
-### build-core
 
  + Configure global security
  + Jenkins’ own user database
@@ -60,6 +59,9 @@ Account: admin / admin123 - deployment / deployment123
  + Logged-in users can do anything
  + Configure System
  + Maven Configuration / /usr/share/local/maven (including settings.xml)
+
+### build-core 
+ 
  + New maven job 
  + git : http://ci-tools/gogs/my-startup/server.git
  + poll scm : * * * * *
@@ -70,13 +72,13 @@ Account: admin / admin123 - deployment / deployment123
 ### deploy-test
 
  + This build is parameterized: List maven artifact versions
-   + Name: SERVER
-   + Repository Base URL: http://ci-tools/nexus/content/repositories/public
-   + Group Id: my-startup
-   + Artifact Id: server
-   + Packaging: war
-   + Versions filter: .*SNAPSHOT
-   + Default: LATEST
+  + Name: SERVER
+  + Repository Base URL: http://ci-tools/nexus/content/repositories/public
+  + Group Id: my-startup
+  + Artifact Id: server
+  + Packaging: war
+  + Versions filter: .*SNAPSHOT
+  + Default: LATEST
  + Post action: Rundeck
    + Job Identifier
    + Job options: war_url=${SERVER_ARTIFACT_URL}
